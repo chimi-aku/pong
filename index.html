@@ -5,15 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PONG</title>
     <link rel="stylesheet" href="./style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
   </head>
   <body>
     <section class="start_game_section">
-      <label for="game_mode_list"></label>
-      <select name="game_mode" id="game_mode_list">
-          <option value="pvb">one player</option>
-          <option value="pvb">two players</option>
-      </select>
-      <button class="play_btn">play</button>
+      
+      <div class="select-box">
+        <div class="options-container">
+
+          <div class="option">
+            <input type="radio" class="radio" id="pve" name="category" />
+            <label for="pve">one player</label>
+          </div>
+
+          <div class="option">
+            <input type="radio" class="radio" id="pvp" name="category" />
+            <label for="pvp">two players</label>
+          </div>
+
+        </div>
+
+        <div class="selected">
+          Select game mode
+        </div>
+      </div>
+
+      <button class="play_btn">
+        <span class="text">play</span>
+      </button>
     </section>
+    <script src="./select_game_mode.js"></script>
   </body>
 </html>
