@@ -15,6 +15,10 @@ body {
   text-transform: uppercase;
 }
 
+.display_none {
+  display: none;
+}
+
 /** START GAME SECTION**/
 
 .start_game_section {
@@ -30,6 +34,8 @@ body {
   align-items: center;
 
   font-size: 2.5rem;
+
+  display: none; /* to develoment */
 }
 
 .select-box {
@@ -129,8 +135,9 @@ body {
     border-radius: 8px;
     font-size: 4rem;
     cursor: pointer;
-    
+    outline: none;
 }
+
 .play_btn > .text {
     position: relative;
     color: transparent;
@@ -144,6 +151,7 @@ body {
     background-clip: text;
     transition: background-position 300ms;
 }
+
 .play_btn::before {
     content: '';
     position: absolute;
@@ -156,10 +164,84 @@ body {
     transform: scale3d(0, 1, 1);
     transition: transform 300ms;
 }
+
 .play_btn:hover .text {
     background-position: 0 0;
 }
+
 .play_btn:hover::before {
     transform-origin: 0 0;
     transform: scale3d(1, 1, 1);
 }
+
+
+/** BOARD SECTION**/
+
+.board {
+  width: 50rem;
+  height: 36rem;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+ /* display: none;  to develoment */
+
+}
+
+.score {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 6rem;
+  color: white;
+
+
+}
+
+.game {
+  width: 100%;
+  height: 28rem;
+  margin-top: 2rem;
+  position: relative;
+
+  border: .5rem dashed white;
+}
+
+.bat {
+  height: 8%;
+  width: 1%;
+
+  background-color: white;
+
+  position: absolute;
+}
+
+.player1_bat {
+  top: 50%;
+  left: 2%;
+  transform: translate(-50%, -50%);
+}
+
+.player2_bat {
+  top: 50%;
+  right: 2%;
+  transform: translate(-50%, -50%);
+}
+
+.ball {
+  width: 3%;
+  height: 5%;
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+}
+
