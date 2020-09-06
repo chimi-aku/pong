@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PONG</title>
-    <link rel="stylesheet" href="./style.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <section class="start_game_section">
-      
-      <div class="select-box">
-        <div class="options-container">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PONG</title>
+        <link rel="stylesheet" href="./style.css" />
 
-          <div class="option">
-            <input type="radio" class="radio" id="pve" name="category" />
-            <label for="pve">one player</label>
-          </div>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Acme&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <section class="start_game_section">
+            <div class="select-box">
+                <div class="options-container">
+                    <div class="option">
+                        <input
+                            type="radio"
+                            class="radio"
+                            id="pve"
+                            name="category"
+                        />
+                        <label for="pve">one player</label>
+                    </div>
 
-          <div class="option">
-            <input type="radio" class="radio" id="pvp" name="category" />
-            <label for="pvp">two players</label>
-          </div>
+                    <div class="option">
+                        <input
+                            type="radio"
+                            class="radio"
+                            id="pvp"
+                            name="category"
+                        />
+                        <label for="pvp">two players</label>
+                    </div>
+                </div>
 
-        </div>
+                <div class="selected">select game mode</div>
+            </div>
 
-        <div class="selected">Select game mode</div>
-      </div>
+            <button class="play_btn">
+                <span class="text">play</span>
+            </button>
+        </section>
+       
 
-      <button class="play_btn">
-        <span class="text">play</span>
-      </button>
-    </section>
-    <section class="board">
+        
+        <script src="./select_game_mode.js"></script>
+        <script src="./script.js"></script>
+    </body>
+</html>
+            <!-- 
+      <section class="board">
       <div class="score">
         <span class="player1_score">P1 <span>0</span></span>
         <span>:</span>
         <span class="player2_score">P2 <span>0</span></span>
       </div>
-      <div class="game">
-        <div class="player1_bat bat"></div>
-        <div class="ball"></div>
-        <div class="player2_bat bat"></div>
-      </div>
+      <div class="game"></div>
     </section>
 
-    <script src="./select_game_mode.js"></script>
-    <script src="./script.js"></script>
-  </body>
-</html>
+    -->
