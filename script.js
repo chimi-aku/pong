@@ -224,6 +224,13 @@ Game = {
             //console.log(this.ballPosLeft, this.ballPosTop);
             if(this.ballPosTop > 97) this.ballDirection = 'rt';
             else if(this.ballPosLeft > 97) {
+                if(this.ballPosTop > this.player1Pos && this.ballPosTop < this.player1Pos + 6) {
+                    this.ballDirection = 'rd';
+                    console.log('hit');
+                }
+                else {
+                    this.winAndReset('player1');
+                }
                 this.ballDirection = 'ld';
             }
             this.renderGame();
@@ -233,13 +240,22 @@ Game = {
             this.ballPosLeft++;
             this.ballPosTop-=this.ballPower;
             //console.log(this.ballPosLeft, this.ballPosTop);
-            if(this.ballPosLeft > 97)this.ballDirection = 'ld';
+            if(this.ballPosLeft > 97){
+                if(this.ballPosTop > this.player1Pos && this.ballPosTop < this.player1Pos + 6) {
+                    this.ballDirection = 'rd';
+                    console.log('hit');
+                }
+                else {
+                    this.winAndReset('player1');
+                }
+            }
             else if(this.ballPosTop < 3) this.ballDirection = 'rd';
             
             this.renderGame();
         }
 
     },
+
 
     winAndReset: function(whoWon) {
         if(whoWon == 'player1'){
