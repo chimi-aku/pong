@@ -13,6 +13,8 @@ Game = {
     ballNextPosTop: 50,
     ballNextPosLeft: 50,
     ballDirection: 'lt',
+    ballPower: 2,
+    ballFrom: 'r',
 
 
     startGame: function () {
@@ -36,9 +38,18 @@ Game = {
                 });
                 setInterval(() => {
                     this.moveBall();
-                }, 50);
+                }, 25);
             }
-
+            else if(this.gamemode == 'two players'){
+                window.addEventListener('keydown', (e) => {
+                    this.movePlayer1Bat(e);
+                    this.movePlayer2Bat(e);
+                });
+                setInterval(() => {
+                    this.moveBall();
+                }, 25);
+            }
+        
         }
     },
 
@@ -95,8 +106,7 @@ Game = {
 
     movePlayer1Bat: function(e) {
         // Firt version of code which moves bat
-        const bats = document.querySelector('.game').childNodes;
-        const bat = bats[0];
+        const bat = document.querySelector('.player1_bat');
     
         if(e.keyCode == 65){
             let newPos = parseInt(bat.style.top[0] * 10) + parseInt(bat.style.top[1]) - 1;
@@ -122,37 +132,154 @@ Game = {
         }
     },
 
+    movePlayer2Bat: function(e) {
+        // Firt version of code which moves bat
+        const bat = document.querySelector('.player2_bat');
+    
+        if(e.keyCode == 37){
+            let newPos = parseInt(bat.style.top[0] * 10) + parseInt(bat.style.top[1]) - 1;
+            //console.log(newPos);
+            if(Number.isNaN(newPos)) newPos = parseInt(bat.style.top[0]) - 1;
+            //console.log(newPos)
+            if(newPos > 5){
+                this.player2Pos = newPos;
+                this.renderGame();
+            }
+        }
+    
+        if(e.keyCode == 39){
+            let newPos = parseInt(bat.style.top[0] * 10) + parseInt(bat.style.top[1]) + 1;
+            if(Number.isNaN(newPos)) newPos = parseInt(bat.style.top[0]) + 1;
+    
+            if(newPos < 95){
+                this.player2Pos = newPos;
+                this.renderGame();
+            }
+    
+            //console.log(bat.style.top[1])
+        }
+    },
+
     moveBall: function(e){
         /*ball direction 
             lt - left-top
             ld - left-down
             rt- right-top
             rd - right-down
+
+          ball from
+          r -right
+          l -left  
         */
-        const ball = document.querySelector('.ball');
 
         if(this.ballDirection == 'lt'){
             this.ballPosLeft--;
-            this.ballPosTop-=2;
-            console.log(this.ballPosLeft, this.ballPosTop);
-            if(this.ballPosLeft < 3 && this.ballPosTop < 3) this.ballDirection = 'ld';
+            this.ballPosTop-=this.ballPower;
+            //console.log(this.ballPosLeft, this.ballPosTop);
+            if(this.ballPosTop < 3)this.ballDirection = 'ld';
+            else if(this.ballPosLeft < 3) {
+                const bat1 = document.querySelector('.player1_bat')
+
+                // Check ball hit
+                console.log(this.player1Pos);
+                if(this.ballPosTop > this.player1Pos && this.ballPosTop < this.player1Pos + 6) {
+                    this.ballDirection = 'rd';
+                    console.log('hit');
+                }
+                else {
+                    this.winAndReset('player2');
+                }
+
+
+            }
             this.renderGame();
         }
 
         if(this.ballDirection == 'ld'){
             this.ballPosLeft--;
-            this.ballPosTop+=2;
-            console.log(this.ballPosLeft, this.ballPosTop);
-            if(this.ballPosLeft < 1 || this.ballPosTop < 1) this.ballDirection = 'ld';
+            this.ballPosTop+=this.ballPower;
+            //console.log(this.ballPosLeft, this.ballPosTop);
+            if(this.ballPosLeft < 3) {
+                const bat1 = document.querySelector('.player1_bat')
+
+                // Check ball hit
+                console.log(this.player1Pos);
+                if(this.ballPosTop > this.player1Pos && this.ballPosTop < this.player1Pos + 6) {
+                    this.ballDirection = 'rd';
+                    console.log('hit');
+                }
+                else {
+                    this.winAndReset('player2');
+                }
+
+
+            }
+            else if(this.ballPosTop > 97) this.ballDirection = 'lt';
             this.renderGame();
         }
 
+        if(this.ballDirection == 'rd'){
+            this.ballPosLeft++;
+            this.ballPosTop+=this.ballPower;
+            //console.log(this.ballPosLeft, this.ballPosTop);
+            if(this.ballPosTop > 97) this.ballDirection = 'rt';
+            else if(this.ballPosLeft > 97) {
+                this.ballDirection = 'ld';
+            }
+            this.renderGame();
+        }
+
+        if(this.ballDirection == 'rt'){
+            this.ballPosLeft++;
+            this.ballPosTop-=this.ballPower;
+            //console.log(this.ballPosLeft, this.ballPosTop);
+            if(this.ballPosLeft > 97)this.ballDirection = 'ld';
+            else if(this.ballPosTop < 3) this.ballDirection = 'rd';
+            
+            this.renderGame();
+        }
+
+    },
+
+    winAndReset: function(whoWon) {
+        if(whoWon == 'player1'){
+            Score.addPointForPlayer1();
+        }
+        else{
+            Score.addPointForPlayer2();
+        }
+
+        const ball = document.querySelector('.ball');
+        ball.parentNode.removeChild(ball);
+
+        this.ballPosTop = 50;
+        this.ballPosLeft = 50;
+        /*
+        const newBall = document.createElement('div');
+        newBall.classList.add('ball');
+        newBall.style.top = `${this.ballPosTop}%`;
+        newBall.style.left = `${this.ballPosLeft}%`;
+        document.querySelector('.game').appendChild(newBall);
+        */
+        console.log(document.querySelector('.game'));
     }
 };
 
 const Score = {
     player1Score: 0,
     player2Score: 0,
+
+    addPointForPlayer1: function(){
+        this.player1Score++;
+        const p1Score = document.querySelector('.player1_score');
+        p1Score.textContent = this.player1Score;
+    },
+
+    addPointForPlayer2: function(){
+        this.player2Score++;
+        const p1Score = document.querySelector('.player2_score');
+        p1Score.textContent = this.player2Score;
+    }
 }
 
 

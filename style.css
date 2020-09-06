@@ -223,12 +223,12 @@ body {
 
 .player1_bat {
   transform: translate(-50%, -50%);
-  left: 2%;
+  left: 1%;
 }
 
 .player2_bat {
   transform: translate(-50%, -50%);
-  right: 2%;
+  right: 1%;
 }
 
 .ball {
